@@ -3,7 +3,7 @@
 
 Copyright (C) 2019 https://github.com/ajwahab
 Copyright (C) 2019 D. de Vries
-Copyright (C) 2019 DARCorporation
+Copyright (C) 2019 DARcorporation
 
 This file is part of xfoil-python.
 

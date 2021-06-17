@@ -1,6 +1,6 @@
 !***********************************************************************
 !   Copyright (C) 2019 D. de Vries
-!   Copyright (C) 2019 DARCorporation
+!   Copyright (C) 2019 DARcorporation
 !   Original Copyright (C) 2000 Mark Drela
 !
 !   This file is part of xfoil-python.

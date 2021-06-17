@@ -1,20 +1,27 @@
 # -*- coding: utf-8 -*-
-#   Copyright (c) 2019 D. de Vries
-#
-#   This file is part of XFoil.
-#
-#   XFoil is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#   (at your option) any later version.
-#
-#   XFoil is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License
-#   along with XFoil.  If not, see <https://www.gnu.org/licenses/>.
+"""
+
+Copyright (C) 2019 https://github.com/ajwahab
+Copyright (C) 2019 D. de Vries
+Copyright (C) 2019 DARCorporation
+
+This file is part of xfoil-python.
+
+xfoil-python is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+xfoil-python is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with xfoil-python.  If not, see <https://www.gnu.org/licenses/>.
+
+"""
+
 import numpy as np
 import unittest
 
@@ -98,7 +105,7 @@ class TestXFoil(unittest.TestCase):
         self.assertAlmostEqual(a, 9.0617, 4)
         self.assertAlmostEqual(cd, 0.0135, 4)
         self.assertAlmostEqual(cm, 0.0013, 4)
-        self.assertAlmostEqual(cp, -4.7361, 4)        
+        self.assertAlmostEqual(cp, -4.7361, 4)
 
     def test_aseq(self):
         """Analyse the NACA 0012 at Re = 1e6, M = 0, α = -20, -19.5, ..., 19.5 and verify the results."""
@@ -144,7 +151,7 @@ class TestXFoil(unittest.TestCase):
             -0.4139, -0.4790, -0.5560, -0.6490, -0.7602, -0.8914, -1.0441, -1.2172, -1.4162, -1.6497,
             -1.9301, -2.2316, -2.5655, -2.9289, -3.2968, -3.6164, -3.9604, -4.3141, -4.6896, -5.0771,
             -5.5077, -5.9260, -6.3751, -6.8156, -7.2537, -7.7335, -8.1964, -8.5225, -8.9357, -9.3128,
-            -9.6696, -9.9962,-10.2224,-10.2701,-10.1655,-10.1009, -9.9321, -9.6953, -9.4179, -9.1134]), 4)        
+            -9.6696, -9.9962,-10.2224,-10.2701,-10.1655,-10.1009, -9.9321, -9.6953, -9.4179, -9.1134]), 4)
 
     def test_cseq(self):
         """Analyse the NACA 0012 at Re = 1e6, M = 0, C_l = -0.5, -0.45, ..., 0.45 and verify the results."""

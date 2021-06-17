@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
+"""XFoil module to calculate aerodynamic characteristics of an aerofoil.
 
 Copyright (C) 2019 D. de Vries
 Copyright (C) 2019 DARCorporation

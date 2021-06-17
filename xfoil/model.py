@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
+"""Module for `xfoil-python` with geometric models.
 
 Copyright (C) 2019 D. de Vries
 Copyright (C) 2019 DARCorporation
@@ -24,8 +24,8 @@ along with xfoil-python.  If not, see <https://www.gnu.org/licenses/>.
 import numpy as np
 
 
-class Airfoil(object):
-    """Airfoil
+class Airfoil:
+    """Geometry of an airfoil.
 
     Attributes
     ----------
@@ -35,7 +35,15 @@ class Airfoil(object):
     """
 
     def __init__(self, x, y):
-        super().__init__()
+        """Initizlize the `Airfoil` class.
+
+        Parameters
+        ----------
+        x : np.ndarray
+            List of x-coordinates of the airfoil surface.
+        y : np.ndarray
+            List of y-coordinates of the airfoil surface.
+        """
         self.coords = np.ndarray((0, 2))
         self.x = x
         self.y = y

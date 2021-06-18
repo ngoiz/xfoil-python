@@ -1,25 +1,38 @@
 
 General
--------
+=======
 This is a stripped down version of XFOIL, presented in the form of a Python module. What's unique about this package
- w.r.t. many others out there allowing an interface to XFOIL, is the fact that the Python code talks directly to a 
+ w.r.t. many others out there allowing an interface to XFOIL, is the fact that the Python code talks directly to a
  compiled Fortran library. This approach avoids having to read/write in-/output files to the disk and communicating with
- the XFOIl executable. Eliminating the need for constant disk I/O operations can significantly speed up parallel 
+ the XFOIl executable. Eliminating the need for constant disk I/O operations can significantly speed up parallel
  frameworks in particular, giving this approach a clear advantage.
 
 Building and Installing the Python Module
------------------------------------------
+=========================================
+
+Windows
+-------
 If you are on a Windows machine (64bit) with Python 3.6, installing XFoil is a simple matter of running:
 
 ```bash
 pip install xfoil
 ```
 
+Linux
+-----
+(New in v1.2.0)
+On Linux the XFoil Fortran code has to be compiled. This is done automatically, if all required packages are installed
+```bash
+pip install xfoil
+```
+
+Manual Installation
+-------------------
 If you are using a different type of machine, or a different version of Python, you will have to make sure some
-software is installed on your system in order for the package to be successfully built. First of all, the module targets 
+software is installed on your system in order for the package to be successfully built. First of all, the module targets
 Python 3, and does NOT support Python 2. So make sure a Python 3 environment is installed and available.
 Furthermore, working compilers for C and Fortran have to be installed and on the PATH. On Windows, the build and
-installation have ONLY been tested with MinGW, using gcc and gfortran. 
+installation have ONLY been tested with MinGW, using gcc and gfortran.
 
 Then, installing XFoil should be as simple as running
 
@@ -29,7 +42,7 @@ pip install .
 
 from the root of the downloaded repository.
 
-On Windows, you may have to force the system to use MinGW. To do so, create a file named `distutils.cfg` in 
+On Windows, you may have to force the system to use MinGW. To do so, create a file named `distutils.cfg` in
 `PYTHONPATH\Lib\distutils` with the following contents:
 
 ```INI
@@ -38,7 +51,7 @@ compiler=mingw32
 ```
 
 If you are not able to create this file for your Python environment, you can instead create a file named `setup.cfg` in
-the root of the repo with the same contents. It is also possible to force the use of MinGW  directly when invoking 
+the root of the repo with the same contents. It is also possible to force the use of MinGW  directly when invoking
 `pip` by calling:
 
 ```bash
@@ -46,7 +59,7 @@ pip install --global-option build_ext --global-option --compiler=mingw32 .
 ```
 
 Using the Module
-----------------
+================
 All XFoil operations are performed using the `XFoil` class. So the first step when using this module is to create an
 instance of this class:
 
@@ -55,7 +68,7 @@ instance of this class:
 >>>  xf = XFoil()
 ```
 
-If this does not produce any errors, the installation should be functioning properly. 
+If this does not produce any errors, the installation should be functioning properly.
 
 
 The symmetric NACA 0012 airfoil is included as a test case. It can be loaded into the XFoil library like this:
@@ -76,7 +89,7 @@ The symmetric NACA 0012 airfoil is included as a test case. It can be loaded int
 ```
 
 Once the airfoil has been loaded successfully it can be analyzed. Let's analyze it for a range of angles of attack, at a
-Reynolds number of one million. Let's limit the maximum number of iterations to 40 (the default is 20) as well. 
+Reynolds number of one million. Let's limit the maximum number of iterations to 40 (the default is 20) as well.
 For the range of angles of attack, we will go from -20 degrees to 20 degrees with steps of 0.5 degrees:
 
 ```pycon
@@ -85,8 +98,8 @@ For the range of angles of attack, we will go from -20 degrees to 20 degrees wit
 >>>  a, cl, cd, cm, cp = xf.aseq(-20, 20, 0.5)
 ```
 
-The XFOIL library should produce a lot of output, which should be familiar to those who have used the original XFOIL 
-application before. The final result are lists of angles of attack, `a`, and the corresponding lift coefficients, `cl`, 
+The XFOIL library should produce a lot of output, which should be familiar to those who have used the original XFOIL
+application before. The final result are lists of angles of attack, `a`, and the corresponding lift coefficients, `cl`,
 drag coefficients, `cd`, moment coefficients, `cm`, and minimum pressure coefficients `cp`. We can now, for example, plot the lift curve for this airfoil:
 
 ```pycon
@@ -112,4 +125,3 @@ to analyze for an angle of attack of 10 degrees, a lift coefficient of 1.0, and 
 -0.5 to 0.5 with steps of 0.05.
 
 For other features and specifics, see the documentation in the Python source files.
- 

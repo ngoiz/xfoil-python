@@ -57,7 +57,6 @@ class XFoil:
         self._load_library()
         self._airfoil = None
 
-
     def __del__(self):
         """Delete the XFoil class instance."""
         self._unload_library()

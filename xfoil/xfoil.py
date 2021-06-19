@@ -62,6 +62,7 @@ class XFoil:
         self._unload_library()
 
     def _load_library(self):
+        """Load the Fortran library."""
         # The libxfoil library is not threadsafe, but if we make a copy of it
         # and load that copy, all values are private to this instance!
         for lib in pathlib.Path(__file__).parent.glob('libxfoil.*'):
@@ -94,7 +95,7 @@ class XFoil:
         self._lib.get_n_crit.restype = c_float
 
     def _unload_library(self):
-        """Unload the library and delete temporary file."""
+        """Unload the Fortran library and delete its temporary copy."""
         handle = self._lib._handle
         del self._lib
         try:

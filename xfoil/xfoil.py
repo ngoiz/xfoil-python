@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """XFoil module to calculate aerodynamic characteristics of an airfoil.
 
+Copyright (C) 2021 Stephan Helma
 Copyright (C) 2021 GDuthe (https://github.com/GDuthe)
 Copyright (C) 2019 D. de Vries
 Copyright (C) 2019 DARcorporation
@@ -24,19 +25,15 @@ along with xfoil-python.  If not, see <https://www.gnu.org/licenses/>.
 
 import ctypes
 import os
-import glob
+import shutil
+import tempfile
+import pathlib
 
 from ctypes import c_bool, c_int, c_float, byref, POINTER, cdll
-from shutil import copy2
-from tempfile import NamedTemporaryFile
 
 import numpy as np
 
 from .model import Airfoil
-
-here = os.path.abspath(os.path.dirname(__file__))
-lib_path = glob.glob(os.path.join(here, 'libxfoil.*'))[0]
-lib_ext = lib_path[lib_path.rfind('.'):]
 
 fptr = POINTER(c_float)
 bptr = POINTER(c_bool)
@@ -57,11 +54,30 @@ class XFoil:
 
     def __init__(self):
         """Initialize the `XFoil` class."""
-        tmp = NamedTemporaryFile(mode='wb', delete=False, suffix=lib_ext)
-        tmp.close()
-        self._lib_path = tmp.name
-        copy2(lib_path, self._lib_path)
-        self._lib = cdll.LoadLibrary(self._lib_path)
+        # The libxfoil library is not threadsafe, but if we make a copy of it
+        # and load that copy, all values are private to this instance!
+        for lib in pathlib.Path(__file__).parent.glob('libxfoil.*'):
+            # Make a temporary file
+            fd, tmp_lib = tempfile.mkstemp(prefix=lib.stem, suffix=lib.suffix)
+            # Close that file, so that Windows will not complain
+            os.close(fd)
+            # Copy the library to the temporary file
+            shutil.copy2(lib, tmp_lib)
+            # Load the library
+            try:
+                self._lib = cdll.LoadLibrary(tmp_lib)
+            except OSError:
+                os.remove(tmp_lib)
+                continue
+            except Exception:
+                os.remove(tmp_lib)
+                raise
+            else:
+                self._lib_path = tmp_lib
+                break
+        else:
+            raise RuntimeError("Could not load the runtime library 'libxfoil.*'")
+
         self._lib.init()
         self._airfoil = None
 

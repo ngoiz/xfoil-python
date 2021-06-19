@@ -54,6 +54,15 @@ class XFoil:
 
     def __init__(self):
         """Initialize the `XFoil` class."""
+        self._load_library()
+        self._airfoil = None
+
+
+    def __del__(self):
+        """Delete the XFoil class instance."""
+        self._unload_library()
+
+    def _load_library(self):
         # The libxfoil library is not threadsafe, but if we make a copy of it
         # and load that copy, all values are private to this instance!
         for lib in pathlib.Path(__file__).parent.glob('libxfoil.*'):
@@ -79,15 +88,14 @@ class XFoil:
             raise RuntimeError("Could not load the runtime library 'libxfoil.*'")
 
         self._lib.init()
-        self._airfoil = None
 
         self._lib.get_print.restype = c_bool
         self._lib.get_reynolds.restype = c_float
         self._lib.get_mach.restype = c_float
         self._lib.get_n_crit.restype = c_float
 
-    def __del__(self):
-        """Delete the XFoil class instance."""
+    def _unload_library(self):
+        """Unload the library and delete temporary file."""
         handle = self._lib._handle
         del self._lib
         try:

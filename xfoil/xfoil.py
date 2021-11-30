@@ -160,7 +160,7 @@ class XFoil:
         xtr_top = c_float()
         xtr_bot = c_float()
         self._lib.get_xtr(byref(xtr_top), byref(xtr_bot))
-        return float(xtr_top), float(xtr_bot)
+        return xtr_top.value, xtr_bot.value
 
     @xtr.setter
     def xtr(self, value):
